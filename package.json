@@ -2,8 +2,7 @@
   "name": "next-videogames",
   "version": "0.1.0",
   "workspaces": [
-    "api/*",
-    "client/*"
+    "*/"
   ],
   "scripts": {
     "co": "sui-mono commit"
