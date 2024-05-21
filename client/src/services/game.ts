@@ -11,10 +11,14 @@ interface GetVideoGamesProps {
   pagination: Pagination;
 }
 
-export const getVideoGames = async (): Promise<GetVideoGamesProps> => {
+export const getVideoGames = async ({
+  page,
+}: {
+  page: number;
+}): Promise<GetVideoGamesProps> => {
   try {
     const res = await fetch(
-      `${API_URL}/video-games?populate[platforms][fields][0]=name&populate[cover][fields][0]=url`,
+      `${API_URL}/video-games?populate[platforms][fields][0]=name&populate[cover][fields][0]=url&pagination[pageSize]=2&pagination[page]=${page}`,
     );
 
     const { data, meta } = (await res.json()) as VideoGames;

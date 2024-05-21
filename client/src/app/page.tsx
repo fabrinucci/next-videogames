@@ -1,7 +1,16 @@
 import { getVideoGames } from '@/services/game';
+import { Pagination } from './components/Pagination';
 
-export default async function Home() {
-  const { data: games } = await getVideoGames();
+interface Props {
+  searchParams: {
+    page: string;
+  };
+}
+
+export default async function Home({ searchParams }: Props) {
+  const { page } = searchParams;
+
+  const { data: games, pagination } = await getVideoGames({ page: +page || 1 });
 
   return (
     <main className='flex min-h-screen flex-col px-24 py-16 items-center'>
@@ -38,6 +47,7 @@ export default async function Home() {
           );
         })}
       </div>
+      <Pagination pagination={pagination} />
     </main>
   );
 }
