@@ -362,111 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiPlatformPlatform extends Schema.CollectionType {
-  collectionName: 'platforms';
-  info: {
-    singularName: 'platform';
-    pluralName: 'platforms';
-    displayName: 'Platform';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetMinMaxLength<{
-        maxLength: 30;
-      }>;
-    release: Attribute.Date;
-    company: Attribute.Enumeration<
-      [
-        'apf',
-        'atari',
-        'bandai',
-        'coleco',
-        'entex',
-        'magnavox',
-        'mattel',
-        'microsoft',
-        'nec',
-        'nintendo',
-        'panasonic',
-        'sega',
-        'sharp',
-        'sony'
-      ]
-    >;
-    video_games: Attribute.Relation<
-      'api::platform.platform',
-      'manyToMany',
-      'api::video-game.video-game'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::platform.platform',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::platform.platform',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiVideoGameVideoGame extends Schema.CollectionType {
-  collectionName: 'video_games';
-  info: {
-    singularName: 'video-game';
-    pluralName: 'video-games';
-    displayName: 'Video Game';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetMinMaxLength<{
-        maxLength: 100;
-      }>;
-    release: Attribute.Date;
-    cover: Attribute.Media;
-    description: Attribute.Blocks;
-    slug: Attribute.UID<'api::video-game.video-game', 'title'>;
-    platforms: Attribute.Relation<
-      'api::video-game.video-game',
-      'manyToMany',
-      'api::platform.platform'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::video-game.video-game',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::video-game.video-game',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -893,6 +788,111 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiPlatformPlatform extends Schema.CollectionType {
+  collectionName: 'platforms';
+  info: {
+    singularName: 'platform';
+    pluralName: 'platforms';
+    displayName: 'Platform';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetMinMaxLength<{
+        maxLength: 30;
+      }>;
+    release: Attribute.Date;
+    company: Attribute.Enumeration<
+      [
+        'apf',
+        'atari',
+        'bandai',
+        'coleco',
+        'entex',
+        'magnavox',
+        'mattel',
+        'microsoft',
+        'nec',
+        'nintendo',
+        'panasonic',
+        'sega',
+        'sharp',
+        'sony'
+      ]
+    >;
+    video_games: Attribute.Relation<
+      'api::platform.platform',
+      'manyToMany',
+      'api::video-game.video-game'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::platform.platform',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::platform.platform',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVideoGameVideoGame extends Schema.CollectionType {
+  collectionName: 'video_games';
+  info: {
+    singularName: 'video-game';
+    pluralName: 'video-games';
+    displayName: 'Video Game';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    release: Attribute.Date;
+    cover: Attribute.Media;
+    description: Attribute.Blocks;
+    slug: Attribute.UID<'api::video-game.video-game', 'title'>;
+    platforms: Attribute.Relation<
+      'api::video-game.video-game',
+      'manyToMany',
+      'api::platform.platform'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::video-game.video-game',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::video-game.video-game',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -903,8 +903,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::platform.platform': ApiPlatformPlatform;
-      'api::video-game.video-game': ApiVideoGameVideoGame;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -913,6 +911,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::platform.platform': ApiPlatformPlatform;
+      'api::video-game.video-game': ApiVideoGameVideoGame;
     }
   }
 }
